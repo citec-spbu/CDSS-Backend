@@ -25,17 +25,17 @@ DEFAULT_HEADERS = {
     "Referer": "https://apicr.minzdrav.gov.ru/",
 }
 
-EMBEDDING_SERVICE_URL = os.getenv("EMBEDDING_SERVICE_URL", "http://localhost:8000/embed")
-EMBEDDING_DIMENSIONS = int(os.getenv("EMBEDDING_DIMENSIONS", "1024"))
-EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE", "12"))
+EMBEDDING_SERVICE_URL = os.getenv("EMBEDDING_SERVICE_URL")
+EMBEDDING_DIMENSIONS = int(os.getenv("EMBEDDING_DIMENSIONS"))
+EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE"))
 
-CHUNK_SIZE = int(os.getenv("PDF_CHUNK_SIZE", "900"))
-CHUNK_OVERLAP = int(os.getenv("PDF_CHUNK_OVERLAP", "200"))
-MIN_CHUNK_LENGTH = int(os.getenv("PDF_MIN_CHUNK_LENGTH", "120"))
+CHUNK_SIZE = int(os.getenv("PDF_CHUNK_SIZE"))
+CHUNK_OVERLAP = int(os.getenv("PDF_CHUNK_OVERLAP"))
+MIN_CHUNK_LENGTH = int(os.getenv("PDF_MIN_CHUNK_LENGTH"))
 
-REQUEST_TIMEOUT = int(os.getenv("MINZDRAV_REQUEST_TIMEOUT", "60"))
-MAX_RETRIES = int(os.getenv("MINZDRAV_MAX_RETRIES", "3"))
-RETRY_DELAY = int(os.getenv("MINZDRAV_RETRY_DELAY", "3"))
+REQUEST_TIMEOUT = int(os.getenv("MINZDRAV_REQUEST_TIMEOUT"))
+MAX_RETRIES = int(os.getenv("MINZDRAV_MAX_RETRIES"))
+RETRY_DELAY = int(os.getenv("MINZDRAV_RETRY_DELAY"))
 
 
 @dataclasses.dataclass

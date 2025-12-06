@@ -9,21 +9,36 @@ import httpx
 from fastapi import WebSocket, WebSocketDisconnect
 from services.chat_service import ChatSessionManager
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_path = BASE_DIR / ".env"
+
+logger = logging.getLogger()
+
+if env_path.exists():
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except Exception as e:
+        print(str(e))
+
+
 socket_router = fastapi.APIRouter()
 session_manager = ChatSessionManager()
 
 logger = logging.getLogger("example")
-EMBEDDING_SERVICE_URL = os.getenv("EMBEDDING_SERVICE_URL", "http://localhost:8000/embed")
-RERANK_SERVICE_URL = os.getenv("RERANK_SERVICE_URL", "http://localhost:8001/rerank")
+EMBEDDING_SERVICE_URL = os.getenv("EMBEDDING_SERVICE_URL")
+RERANK_SERVICE_URL = os.getenv("RERANK_SERVICE_URL")
 LLM_SERVICE_URL = os.getenv("LLM_SERVICE_URL")
 
-VECTOR_DB_HOST = os.getenv("VECTOR_DB_HOST", os.getenv("DB_HOST", "localhost"))
-VECTOR_DB_PORT = int(os.getenv("VECTOR_DB_PORT", os.getenv("DB_PORT", "5433")))
-VECTOR_DB_NAME = os.getenv("VECTOR_DB_NAME", "rag")
-VECTOR_DB_USER = os.getenv("VECTOR_DB_USER", os.getenv("DB_USER", "dev"))
-VECTOR_DB_PASSWORD = os.getenv("VECTOR_DB_PASSWORD", os.getenv("DB_PASSWORD", "dev_password"))
+VECTOR_DB_HOST = os.getenv("VECTOR_DB_HOST")
+VECTOR_DB_PORT = int(os.getenv("VECTOR_DB_PORT"))
+VECTOR_DB_NAME = os.getenv("VECTOR_DB_NAME")
+VECTOR_DB_USER = os.getenv("VECTOR_DB_USER")
+VECTOR_DB_PASSWORD = os.getenv("VECTOR_DB_PASSWORD")
 
-RETRIEVAL_LIMIT = int(os.getenv("RAG_RETRIEVAL_LIMIT", "20"))
+RETRIEVAL_LIMIT = int(os.getenv("RAG_RETRIEVAL_LIMIT"))
 
 
 @socket_router.websocket("/ws/chat")

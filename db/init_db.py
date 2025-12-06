@@ -21,8 +21,8 @@ def initialize_database():
 
             limit_env = os.getenv("LOAD_MINZDRAV_LIMIT")
             limit = int(limit_env) if limit_env else None
-            force_reload = os.getenv("LOAD_MINZDRAV_FORCE", "false").lower() == "true"
-            push_embeddings = os.getenv("LOAD_MINZDRAV_PUSH_EMBEDDINGS", "true").lower() == "true"
+            force_reload = os.getenv("LOAD_MINZDRAV_FORCE").lower() == "true"
+            push_embeddings = os.getenv("LOAD_MINZDRAV_PUSH_EMBEDDINGS").lower() == "true"
 
             print("Загрузка начальных данных Минздрава...")
             sync_minzdrav_documents(limit=limit, force_reload=force_reload, push_embeddings=push_embeddings)
@@ -30,7 +30,7 @@ def initialize_database():
     except Exception as e:
         logger.exception("Ошибка при инициализации базы данных: %s", e)
         # Повторная попытка через 5 секунд (не более 3 попыток)
-        retry_left = int(os.getenv("INIT_DB_RETRY_COUNT", "3"))
+        retry_left = int(os.getenv("INIT_DB_RETRY_COUNT"))
         if retry_left > 1:
             os.environ["INIT_DB_RETRY_COUNT"] = str(retry_left - 1)
             time.sleep(5)
