@@ -25,6 +25,18 @@ DEFAULT_HEADERS = {
     "Referer": "https://apicr.minzdrav.gov.ru/",
 }
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_path = BASE_DIR / ".env"
+
+if env_path.exists():
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except Exception as e:
+        print(str(e))
+
 EMBEDDING_SERVICE_URL = os.getenv("EMBEDDING_SERVICE_URL")
 EMBEDDING_DIMENSIONS = int(os.getenv("EMBEDDING_DIMENSIONS"))
 EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE"))

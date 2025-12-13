@@ -6,6 +6,18 @@ from db.postgres import DataManager
 
 logger = logging.getLogger(__name__)
 
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env_path = BASE_DIR / ".env"
+
+if env_path.exists():
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except Exception as e:
+        print(str(e))
+
 
 def initialize_database():
     print("Инициализация базы данных...")
